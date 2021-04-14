@@ -13,9 +13,19 @@
 
 <ion-content>
   <ion-card *ngFor="let pic of list">
-
+    <ion-item>
+    <ion-avatar slot="start">
+      <img [src]="env.API_URL+'/'+pic.filename">
+    </ion-avatar>
+    <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
+  </ion-item>
     <ion-img [src]="env.API_URL+'/'+pic.filename"></ion-img>
     <ion-card-header>
+      <ion-icon name="heart-outline"></ion-icon>
+      &nbsp;
+      <ion-icon name="pricetag-outline"></ion-icon>
+      &nbsp;
+      <ion-icon name="share-social-outline"></ion-icon>
       <ion-card-subtitle>{{pic.author}}</ion-card-subtitle>
       <ion-card-title>{{pic.title}}</ion-card-title>
     </ion-card-header>
