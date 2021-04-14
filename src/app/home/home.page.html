@@ -1,23 +1,32 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>
-      Please Upload a File
+      Picture Land !
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="/upload" color="primary">
+        <ion-icon color="primary" slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="fixed">
-      Picture
-    </ion-label>
-    <input type="file" (change)="onFileChange($event)" accept="image/jpeg, image/png" />
-  </ion-item>
-  <ion-item>
-    <ion-label position="fixed">
-      Title
-    </ion-label>
-    <ion-input type="text" [(ngModel)]="title"></ion-input>
-  </ion-item>
-<ion-button expand="block" (click)="uploadFile()">Upload File</ion-button>
+  <ion-card *ngFor="let pic of list">
+
+    <ion-img [src]="env.API_URL+'/'+pic.filename"></ion-img>
+    <ion-card-header>
+      <ion-card-subtitle>{{pic.author}}</ion-card-subtitle>
+      <ion-card-title>{{pic.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{pic.description}}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="goTo('/upload')">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,24 +11,20 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomePage {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private router: Router) {}
+  env = environment;
+  list: any;
 
-  file: File;
-  title = '';
-
-  onFileChange(event){
-    this.file = event.target.files[0];
+  goTo(route){
+    this.router.navigateByUrl(route);
   }
 
-  uploadFile(){
-    let formData = new FormData();
-    if (this.file) {
-      formData.append('picture',this.file, this.file.name);
-      formData.append('title',this.title);
-      this.http.post('http://localhost:3000',formData).subscribe( (response) => {
-      console.log('response');
-    });
-    }
+  ionViewWillEnter(){
+    this.http.get(this.env.API_URL+'/list').subscribe( data => {
+      this.list = data;
+      console.log(data);
+    })
   }
 
 }
